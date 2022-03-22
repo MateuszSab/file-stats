@@ -3,10 +3,10 @@ import scala.io.Source
 object fileStats extends App {
 
   val filename = args(0)
+  def lines = Source.fromFile(filename).getLines
 
   def wordCounter(filename: String): Map[String, Int] = {
-    Source.fromFile(filename)
-      .getLines()
+    lines
       .flatMap(line => line.split("\\W"))
       .toSeq
       .groupBy(identity)
@@ -21,7 +21,7 @@ object fileStats extends App {
   // print lines data
   println("line index | chars | words")
   var counter = 0
-  Source.fromFile(filename).getLines.foreach {
+  lines.foreach {
     (x) => println(s"${counter} | ${x.length} | ${x.split("\\W").size} ")
     counter += 1
   }

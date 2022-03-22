@@ -4,16 +4,19 @@ object fileStats extends App {
 
   val filename = args(0)
 
-  def textcounter(filename: String): Map[String, Int] = {
-    val words = Source.fromFile(filename).getLines().flatMap(line => line.split(" ")).toSeq
-    words.groupBy(identity).map(t => (t._1, t._2.length))
+  def wordCounter(filename: String): Map[String, Int] = {
+    Source.fromFile(filename)
+      .getLines()
+      .flatMap(line => line.split("\\W"))
+      .toSeq
+      .groupBy(identity)
+      .map(t => (t._1, t._2.length))
   }
 
   // print words occurrences
-  textcounter(filename).foreach({
+  wordCounter(filename).foreach({
     case (word -> count) => println((s"Word '$word' occurs $count times."))
   })
-
 
   // print lines data
   val myLines = Source.fromFile(filename).getLines
@@ -24,6 +27,4 @@ object fileStats extends App {
       println(s"${counter} | ${x.length} | ${x.split(" ").size} ")
       counter += 1
   }
-
-
 }

@@ -19,12 +19,10 @@ object fileStats extends App {
   })
 
   // print lines data
-  val myLines = Source.fromFile(filename).getLines
   println("line index | chars | words")
   var counter = 0
-  myLines.foreach {
-    (x) =>
-      println(s"${counter} | ${x.length} | ${x.split(" ").size} ")
-      counter += 1
+  Source.fromFile(filename).getLines.foreach {
+    (x) => println(s"${counter} | ${x.length} | ${x.split("\\W").size} ")
+    counter += 1
   }
 }
